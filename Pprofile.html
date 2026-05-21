@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sonali Shende | Executive WebGL Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+  background:#000;
+  color:#fff;
+}
+
+/* ===== WEBGL CANVAS ===== */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-2;
+}
+
+.overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at top,rgba(0,229,255,0.1),rgba(0,0,0,0.95));
+  z-index:-1;
+}
+
+/* ===== LAYOUT ===== */
+.container{
+  position:relative;
+  padding:80px 10%;
+}
+
+/* ===== GLASS CARD ===== */
+.card{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(0,229,255,0.25);
+  padding:20px;
+  border-radius:14px;
+  backdrop-filter:blur(12px);
+  margin:20px 0;
+  box-shadow:0 0 25px rgba(0,229,255,0.15);
+}
+
+h1{
+  font-size:3rem;
+  text-shadow:0 0 20px #00e5ff;
+}
+
+h2{
+  color:#00e5ff;
+  margin-top:40px;
+  border-left:4px solid #00e5ff;
+  padding-left:10px;
+}
+
+/* ===== TAGS ===== */
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.tag{
+  background:rgba(0,229,255,0.1);
+  border:1px solid rgba(0,229,255,0.3);
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:0.85rem;
+}
+
+/* ===== TIMELINE ===== */
+.timeline{
+  border-left:2px solid #00e5ff;
+  margin-left:10px;
+  padding-left:20px;
+}
+
+.item{
+  margin:20px 0;
+  position:relative;
+}
+
+.item::before{
+  content:'';
+  position:absolute;
+  left:-28px;
+  top:5px;
+  width:10px;
+  height:10px;
+  background:#00e5ff;
+  border-radius:50%;
+  box-shadow:0 0 10px #00e5ff;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+<div class="overlay"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <h1>Sonali Shende</h1>
+  <div class="card">
+    <b>AVP – IT Application Owner (ITAO)</b><br><br>
+    Banking & Oil & Gas technology professional with 14+ years of experience in global infrastructure,
+    IT governance, risk, compliance, DR, and production stability for mission-critical banking systems.
+  </div>
+
+  <!-- CORE -->
+  <h2>Core Competencies</h2>
+  <div class="card">
+    <div class="tags">
+      <div class="tag">IT Governance</div>
+      <div class="tag">GRC</div>
+      <div class="tag">ITIL</div>
+      <div class="tag">Risk Management</div>
+      <div class="tag">DR</div>
+      <div class="tag">Incident Mgmt</div>
+      <div class="tag">Change Mgmt</div>
+      <div class="tag">Production Support</div>
+      <div class="tag">ServiceNow</div>
+      <div class="tag">Control-M</div>
+      <div class="tag">Audit Compliance</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <h2>Professional Experience</h2>
+
+  <div class="timeline">
+
+    <div class="item card">
+      <b>ABCD Bank</b> (Oct 2025 – Present)<br>
+      AVP – IT Application Owner<br><br>
+      Own governance, risk, compliance, DR planning, ORR, incident & change management for mission-critical banking applications.
+    </div>
+
+    <div class="item card">
+      <b>Nerolac India Pvt Ltd</b> (2018 – 2025)<br>
+      Application Support Analyst (L2/L3)<br><br>
+      Managed production support, ITSM processes, releases, RCA, automation, SLA adherence.
+    </div>
+
+    <div class="item card">
+      <b>SCLr India Technology Centre</b> (2017 – 2018)<br>
+      Application Support Analyst<br><br>
+      SLA/KPI management, monitoring, reporting, release coordination.
+    </div>
+
+    <div class="item card">
+      <b>TCS / Net Infotech</b> (2015 – 2017)<br>
+      Infrastructure & IRM Administrator<br><br>
+      Global server builds, IMACD, ServiceNow operations, data center governance.
+    </div>
+
+    <div class="item card">
+      <b>Barclays Technology Centre</b> (2014 – 2015)<br>
+      Senior System Engineer<br><br>
+      SAP BO, Cognos, reporting systems, production support, data validation.
+    </div>
+
+    <div class="item card">
+      <b>Early Career (2010 – 2014)</b><br>
+      Infrastructure & .NET Developer<br><br>
+      Core banking development, server monitoring, global operations.
+    </div>
+
+  </div>
+
+  <!-- EDUCATION -->
+  <h2>Education & Certifications</h2>
+  <div class="card">
+    B.E Computer Science<br>
+    Diploma in Computer Engineering<br>
+    ITIL Certified<br>
+    Microsoft AZ-900
+  </div>
+
+</div>
+
+<!-- ===== WEBGL SCRIPT ===== -->
+<script>
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth/window.innerHeight,
+  0.1,
+  1000
+);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector("#bg"),
+  alpha:true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+camera.position.z = 60;
+
+/* ===== STAR FIELD ===== */
+function star(){
+  const geo = new THREE.SphereGeometry(0.1,8,8);
+  const mat = new THREE.MeshBasicMaterial({color:0x00e5ff});
+  const s = new THREE.Mesh(geo,mat);
+
+  s.position.x = (Math.random()-0.5)*200;
+  s.position.y = (Math.random()-0.5)*200;
+  s.position.z = (Math.random()-0.5)*200;
+
+  scene.add(s);
+}
+
+for(let i=0;i<900;i++) star();
+
+/* ===== CORE OBJECT ===== */
+const torus = new THREE.Mesh(
+  new THREE.TorusGeometry(12,3,16,100),
+  new THREE.MeshStandardMaterial({
+    color:0x00e5ff,
+    emissive:0x00e5ff,
+    wireframe:true
+  })
+);
+
+scene.add(torus);
+
+scene.add(new THREE.PointLight(0x00e5ff,1));
+
+/* ===== ANIMATION ===== */
+function animate(){
+  requestAnimationFrame(animate);
+
+  torus.rotation.x += 0.002;
+  torus.rotation.y += 0.003;
+
+  renderer.render(scene,camera);
+}
+
+animate();
+
+/* ===== RESIZE ===== */
+window.addEventListener("resize",()=>{
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+
+</body>
+</html>
